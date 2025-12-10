@@ -11,6 +11,7 @@ Each project demonstrates hands-on configuration, troubleshooting, network desig
 |----|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|-------|
 | 01 | [Small Office Network (VLANs Concepts)](01-VLANs-Concepts-Small-Office-Network) | VLANs, Inter-VLAN Routing, DHCP Relay, NAT                                                     | Cisco Packet Tracer |
 | 02 | [Enterprise Network Recovery & Security Hardening](02-Enterprise-Network-Recovery-and-Security-Hardening) | VLAN segmentation, SSH security, Router-on-a-stick, EtherChannel, DHCP Relay, TFTP Backup     | Cisco Packet Tracer |
+| 03 | [GlobalCorp Enterprise Network Simulation](03-GlobalCorp-Enterprise-Network) | VLAN Design, EIGRP, HSRP, EtherChannel, DHCP, SSH, TFTP, High Availability | Cisco Packet Tracer |
 
 ---
 
