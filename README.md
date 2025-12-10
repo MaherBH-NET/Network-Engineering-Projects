@@ -21,9 +21,9 @@ VLAN Design • Inter-VLAN Routing • DHCP/DHCP Relay • NAT • SSH Security 
 🧰 **Tools:** Cisco Packet Tracer • Cisco IOS CLI • GNS3 (future projects)
 
 🏗️ **Upcoming Projects:**  
-- Dynamic Routing (OSPF/EIGRP)  
+- Dynamic Routing (OSPF/EIGRP)  (done)
 - Edge security and ACL design  
-- High-availability network scenarios  
+- High-availability network scenarios  (done)
 - Cloud VPN integration (planned)
 
 ---
