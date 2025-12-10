@@ -1,0 +1,86 @@
+! R4 Configuration - Campus B Border Router
+! =========================================
+
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4-CAMPUS-B
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name globalcorp.local
+ip cef
+no ipv6 cef
+!
+!
+username admin privilege 15 secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+!
+!
+interface GigabitEthernet0/5
+ description Connected to Server2
+ ip address 10.100.2.1 255.255.255.0
+ no shutdown
+!
+interface Serial8/0
+ description WAN Link to R3
+ ip address 10.200.0.10 255.255.255.252
+ clock rate 64000
+ no shutdown
+!
+interface GigabitEthernet7/0
+ description Link to L3-SW2
+ ip address 10.20.0.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet6/0
+ description Link to L3-SW3
+ ip address 10.20.0.5 255.255.255.252
+ no shutdown
+!
+router eigrp 100
+ network 10.100.2.0 0.0.0.255
+ network 10.200.0.8 0.0.0.3
+ network 10.20.0.0 0.0.0.3
+ network 10.20.0.4 0.0.0.3
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+banner motd $
+****************************************************************
+*  WARNING: UNAUTHORIZED ACCESS IS FORBIDDEN                   *
+*  This system is for authorized users only.                   *
+*  All activities are logged and monitored.                    *
+*  Violators will be prosecuted to the fullest extent.         *
+****************************************************************
+$
+!
+line con 0
+ logging synchronous
+ exec-timeout 5 0
+line vty 0 4
+ transport input ssh
+ login local
+ exec-timeout 5 0
+ logging synchronous
+!
+!
+end
