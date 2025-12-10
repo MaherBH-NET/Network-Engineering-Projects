@@ -1,0 +1,149 @@
+! SW5 Configuration - Campus B Access Switch 5
+! ===========================================
+
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW5-CAMPUS-B
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name globalcorp.local
+!
+!
+username admin privilege 15 secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+!
+!
+vlan 2
+ name Management
+!
+vlan 3
+ name HR
+!
+vlan 5
+ name SOC_Team
+!
+vlan 100
+ name Default_VLAN
+!
+vlan 999
+ name Native_Trunk_VLAN
+!
+interface FastEthernet0/1
+ description Trunk to L3-SW2
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2,3,5,100
+ spanning-tree portfast trunk
+ no shutdown
+!
+interface FastEthernet0/2
+ description Trunk to L3-SW3
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2,3,5,100
+ spanning-tree portfast trunk
+ no shutdown
+!
+interface range FastEthernet0/5-6
+ description Management VLAN devices
+ switchport mode access
+ switchport access vlan 2
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 10
+ switchport port-security aging type inactivity
+ spanning-tree portfast
+ no shutdown
+!
+interface range FastEthernet0/10-12
+ description HR VLAN devices
+ switchport mode access
+ switchport access vlan 3
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 10
+ switchport port-security aging type inactivity
+ spanning-tree portfast
+ no shutdown
+!
+interface range FastEthernet0/15-17
+ description SOC Team VLAN devices
+ switchport mode access
+ switchport access vlan 5
+ switchport port-security
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 10
+ switchport port-security aging type inactivity
+ spanning-tree portfast
+ no shutdown
+!
+interface range FastEthernet0/3-4, FastEthernet0/7-9, FastEthernet0/13-14, FastEthernet0/18-24
+ description Unused Port - DISABLED
+ shutdown
+ switchport mode access
+ switchport access vlan 100
+!
+interface Vlan2
+ description Management VLAN
+ ip address 10.20.2.4 255.255.255.0
+ no shutdown
+!
+ip default-gateway 10.20.2.1
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 2,3,5,100 priority 40960
+!
+ip dhcp snooping
+ip dhcp snooping vlan 2,3,5
+no ip dhcp snooping information option
+!
+banner motd $
+****************************************************************
+*  WARNING: UNAUTHORIZED ACCESS IS FORBIDDEN                   *
+*  This system is for authorized users only.                   *
+*  All activities are logged and monitored.                    *
+*  Violators will be prosecuted to the fullest extent.         *
+****************************************************************
+$
+!
+line con 0
+ logging synchronous
+ exec-timeout 5 0
+line vty 0 4
+ transport input ssh
+ login local
+ exec-timeout 5 0
+ logging synchronous
+line vty 5 15
+ transport input ssh
+ login local
+ exec-timeout 5 0
+ logging synchronous
+!
+!
+end
