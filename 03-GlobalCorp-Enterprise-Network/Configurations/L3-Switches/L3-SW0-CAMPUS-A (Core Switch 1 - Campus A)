@@ -1,0 +1,360 @@
+! L3-SW0 Configuration - Campus A Core Switch 1
+! =============================================
+
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname L3-SW0-CAMPUS-A
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+no ip domain lookup
+ip domain name globalcorp.local
+ip routing
+!
+!
+username admin privilege 15 secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+!
+!
+vlan 2
+ name Management
+!
+vlan 3
+ name HR
+!
+vlan 4
+ name CISO
+!
+vlan 5
+ name SOC_Team
+!
+vlan 6
+ name Network_Engineers
+!
+vlan 7
+ name System_Administrator
+!
+vlan 8
+ name IT_Support
+!
+vlan 9
+ name Team_Lead
+!
+vlan 10
+ name BackEnd_Developers
+!
+vlan 11
+ name FrontEnd_Developers
+!
+vlan 12
+ name Data_Scientists
+!
+vlan 13
+ name Business_Analysts
+!
+vlan 14
+ name Marketing
+!
+vlan 15
+ name Sales
+!
+vlan 16
+ name Customer_Support
+!
+vlan 17
+ name Meeting_Room
+!
+vlan 18
+ name Vendors
+!
+vlan 100
+ name Default_VLAN
+!
+vlan 999
+ name Native_Trunk_VLAN
+!
+interface Port-channel 1
+ description EtherChannel to L3-SW1
+ no switchport
+ ip address 10.10.255.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Uplink to R1
+ no switchport
+ ip address 10.10.0.2 255.255.255.252
+ no shutdown
+!
+interface FastEthernet0/1
+ description Trunk to SW0
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2-18,100
+ no shutdown
+!
+interface FastEthernet0/2
+ description Trunk to SW1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2-18,100
+ no shutdown
+!
+interface FastEthernet0/3
+ description Trunk to SW2
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2-18,100
+ no shutdown
+!
+interface FastEthernet0/4
+ description Trunk to SW3
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2-18,100
+ no shutdown
+!
+interface FastEthernet0/5
+ description Trunk to SW4
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 2-18,100
+ no shutdown
+!
+interface FastEthernet0/23
+ description EtherChannel Member to L3-SW1
+ no switchport
+ channel-group 1 mode active
+ no shutdown
+!
+interface FastEthernet0/24
+ description EtherChannel Member to L3-SW1
+ no switchport
+ channel-group 1 mode active
+ no shutdown
+!
+interface Vlan2
+ description Management
+ ip address 10.10.2.2 255.255.255.0
+ standby 2 ip 10.10.2.1
+ standby 2 priority 110
+ standby 2 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan3
+ description HR
+ ip address 10.10.3.2 255.255.255.0
+ standby 3 ip 10.10.3.1
+ standby 3 priority 100
+ standby 3 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan4
+ description CISO
+ ip address 10.10.4.2 255.255.255.0
+ standby 4 ip 10.10.4.1
+ standby 4 priority 110
+ standby 4 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan5
+ description SOC_Team
+ ip address 10.10.5.2 255.255.255.0
+ standby 5 ip 10.10.5.1
+ standby 5 priority 100
+ standby 5 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan6
+ description Network_Engineers
+ ip address 10.10.6.2 255.255.255.0
+ standby 6 ip 10.10.6.1
+ standby 6 priority 110
+ standby 6 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan7
+ description System_Administrator
+ ip address 10.10.7.2 255.255.255.0
+ standby 7 ip 10.10.7.1
+ standby 7 priority 100
+ standby 7 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan8
+ description IT_Support
+ ip address 10.10.8.2 255.255.255.0
+ standby 8 ip 10.10.8.1
+ standby 8 priority 110
+ standby 8 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan9
+ description Team_Lead
+ ip address 10.10.9.2 255.255.255.0
+ standby 9 ip 10.10.9.1
+ standby 9 priority 100
+ standby 9 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan10
+ description BackEnd_Developers
+ ip address 10.10.10.2 255.255.255.0
+ standby 10 ip 10.10.10.1
+ standby 10 priority 110
+ standby 10 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan11
+ description FrontEnd_Developers
+ ip address 10.10.11.2 255.255.255.0
+ standby 11 ip 10.10.11.1
+ standby 11 priority 100
+ standby 11 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan12
+ description Data_Scientists
+ ip address 10.10.12.2 255.255.255.0
+ standby 12 ip 10.10.12.1
+ standby 12 priority 110
+ standby 12 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan13
+ description Business_Analysts
+ ip address 10.10.13.2 255.255.255.0
+ standby 13 ip 10.10.13.1
+ standby 13 priority 100
+ standby 13 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan14
+ description Marketing
+ ip address 10.10.14.2 255.255.255.0
+ standby 14 ip 10.10.14.1
+ standby 14 priority 110
+ standby 14 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan15
+ description Sales
+ ip address 10.10.15.2 255.255.255.0
+ standby 15 ip 10.10.15.1
+ standby 15 priority 100
+ standby 15 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan16
+ description Customer_Support
+ ip address 10.10.16.2 255.255.255.0
+ standby 16 ip 10.10.16.1
+ standby 16 priority 110
+ standby 16 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan17
+ description Meeting_Room
+ ip address 10.10.17.2 255.255.255.0
+ standby 17 ip 10.10.17.1
+ standby 17 priority 100
+ standby 17 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+interface Vlan18
+ description Vendors
+ ip address 10.10.18.2 255.255.255.0
+ standby 18 ip 10.10.18.1
+ standby 18 priority 110
+ standby 18 preempt
+ ip helper-address 10.100.1.2
+ no shutdown
+!
+router eigrp 100
+ network 10.10.0.0 0.0.0.3
+ network 10.10.255.0 0.0.0.3
+ network 10.10.2.0 0.0.0.255
+ network 10.10.3.0 0.0.0.255
+ network 10.10.4.0 0.0.0.255
+ network 10.10.5.0 0.0.0.255
+ network 10.10.6.0 0.0.0.255
+ network 10.10.7.0 0.0.0.255
+ network 10.10.8.0 0.0.0.255
+ network 10.10.9.0 0.0.0.255
+ network 10.10.10.0 0.0.0.255
+ network 10.10.11.0 0.0.0.255
+ network 10.10.12.0 0.0.0.255
+ network 10.10.13.0 0.0.0.255
+ network 10.10.14.0 0.0.0.255
+ network 10.10.15.0 0.0.0.255
+ network 10.10.16.0 0.0.0.255
+ network 10.10.17.0 0.0.0.255
+ network 10.10.18.0 0.0.0.255
+ passive-interface default
+ no passive-interface GigabitEthernet0/2
+ no passive-interface Port-channel 1
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 2-18,100 priority 24576
+!
+banner motd $
+****************************************************************
+*  WARNING: UNAUTHORIZED ACCESS IS FORBIDDEN                   *
+*  This system is for authorized users only.                   *
+*  All activities are logged and monitored.                    *
+*  Violators will be prosecuted to the fullest extent.         *
+****************************************************************
+$
+!
+line con 0
+ logging synchronous
+ exec-timeout 5 0
+line vty 0 4
+ transport input ssh
+ login local
+ exec-timeout 5 0
+ logging synchronous
+line vty 5 15
+ transport input ssh
+ login local
+ exec-timeout 5 0
+ logging synchronous
+!
+!
+end
