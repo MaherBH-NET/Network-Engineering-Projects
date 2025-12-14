@@ -6,7 +6,7 @@ This project simulates two geographically separated campuses (HQ + R&D), connect
 ---
 
 ## 🏢 Topology Overview
-- **Campus A (HQ):** 5 floors, 4 access switches, 2 core L3 switches  
+- **Campus A (HQ):** 5 floors, 5 access switches, 2 core L3 switches  
 - **Campus B (R&D):** 3 floors, 3 access switches, 2 core L3 switches  
 - **Internet Backbone:** 2 routers simulating ISP/core routes  
 - **40+ devices total**
